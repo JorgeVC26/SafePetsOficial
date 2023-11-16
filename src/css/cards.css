@@ -209,23 +209,33 @@ table {
   }
 
 
-
   /* styles.css */
-.mensajeEstado {
-  background-color: #00C853; /* Fondo verde */
-  color: #fff; /* Texto blanco */
-  padding: 10px 20px; /* Espaciado interno aumentado ligeramente */
-  border-radius: 8px; /* Bordes redondeados más suaves */
-  margin: 15px auto; /* Margen superior e inferior aumentado y centrado horizontalmente */
-  text-align: center; /* Alineación de texto al centro */
-  font-weight: bold; /* Texto en negrita */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  opacity: 0; /* Inicialmente, la alerta está oculta */
-  transform: translateY(-20px); /* Desplazada hacia arriba */
-  transition: all 0.3s; /* Transición suave para cambios de estilo */
-  animation: fadeInOut 3s ease-in-out; /* Agregar una animación */
-  max-width: 400px; /* Ancho máximo de la alerta */
-}
+  .mensajeEstado {
+    background-color: #00C853;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(10px); /* Ajustado a translateY(10px) para un desplazamiento más pequeño */
+    transition: all 0.3s;
+    animation: fadeInOut 3s ease-in-out;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  
+  
+  /* Añade estos estilos para evitar que el mensaje se sobreponga al botón de regresar */
+  .back-button {
+    position: relative;
+    z-index: 2; /* Asegura que el botón de regresar tenga un índice z mayor */
+  }
+  
 
 /* Estilos para el mensaje en verde */
 .mensajeEstado.verde {
