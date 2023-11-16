@@ -255,3 +255,93 @@ table {
     transform: translateY(-20px);
   }
 }
+
+
+.confirmation-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Ajusta según sea necesario */
+  margin: 0 auto; /* Centra el cuadro de confirmación en la pantalla */
+}
+
+.confirmation-modal h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.confirmation-modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.confirmation-modal-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.confirmation-modal-buttons button.confirm {
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+}
+
+.confirmation-modal-buttons button.cancel {
+  background-color: #5bc0de;
+  color: #fff;
+  border: none;
+}
+
+
+
+
+.user-deleted-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.user-deleted-message {
+  max-width: 400px;
+  width: 100%;
+  padding: 15px;
+  background-color: #4CAF50;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: auto; /* Añadido para centrar horizontalmente */
+}
+
+.user-deleted-message p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Añade una animación de desvanecimiento */
+@keyframes fadeInOut {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.user-deleted-message-enter-active,
+.user-deleted-message-leave-active {
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+.user-deleted-message-enter, .user-deleted-message-leave-to /* .user-deleted-message-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
