@@ -65,12 +65,35 @@ function Service() {
     }, 500);
   };
 
+
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [servicioToDeleteId, setServicioToDeleteId] = useState(null);
+
+  const confirmDeleteHandler = () => {
+    const serviciosActualizados = serviciosAprobados.filter(
+      (servicio) => servicio.id !== servicioToDeleteId
+    );
+    setServiciosAprobados(serviciosActualizados);
+    localStorage.setItem('serviciosAprobados', JSON.stringify(serviciosActualizados));
+    setConfirmDelete(false);
+    setServicioToDeleteId(null);
+    setMensajeDespuesDeCierre('Servicio eliminado con éxito');
+    // Limpia el mensaje después de unos segundos (ajusta el tiempo según tus necesidades)
+    setTimeout(() => setMensajeDespuesDeCierre(''), 3000);
+  };
+
+  const cancelDeleteHandler = () => {
+    setConfirmDelete(false);
+    setServicioToDeleteId(null);
+    window.location.reload();
+
+  };
+
   const handleEliminarServicio = (id) => {
     if (authToken && (rol === 'superadmin' || rol === 'admin')) {
-      const serviciosActualizados = serviciosAprobados.filter(
-        (servicio) => servicio.id !== id
-      );
-      setServiciosAprobados(serviciosActualizados);
+      setConfirmDelete(true);
+      setServicioToDeleteId(id);
     } else {
       alert('No tienes permisos para eliminar servicios.');
       window.location.reload();
@@ -160,6 +183,20 @@ function Service() {
           filtro={filtro}
           serviciosFiltrados={serviciosFiltrados}
         />
+{confirmDelete && (
+          <div className="confirmation-modal">
+            <h3>¿Estás seguro de que quieres eliminar este servicio?</h3>
+            <div className="confirmation-modal-buttons">
+              <button className="confirm" onClick={confirmDeleteHandler}>
+                Confirmar
+              </button>
+              <button className="cancel" onClick={cancelDeleteHandler}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        )}
+
 {mensajeModalVisible && <MsjServicio />}
           
       </main>
