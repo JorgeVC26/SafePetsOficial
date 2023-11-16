@@ -1,0 +1,91 @@
+/* Estilos para el formulario de contacto */
+.formulario-contacto {
+    max-width: 500px; /* Aumentamos el ancho máximo a 500px */
+    margin: 10rem 30rem 10rem 0;
+    padding: 30px; /* Aumentamos el espacio interno del formulario */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 500px;
+  }
+  
+  /* Estilos para los campos del formulario */
+  .campo {
+    margin-bottom: 20px; /* Aumentamos el espacio entre los campos */
+  }
+  
+  /* Estilos para las etiquetas de los campos */
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  /* Estilos para los campos de entrada de texto y textarea */
+  input, textarea {
+    width: 100%;
+    padding: 12px; /* Aumentamos el espacio interno de los campos */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Estilos para ajustar el ancho de los campos de entrada */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%; /* Deja el ancho completo */
+  }
+  
+  /* Estilos para el botón de envío */
+  button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 12px 24px; /* Aumentamos el espacio del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el botón de envío al pasar el cursor sobre él */
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .contacto__container{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .contacto__info{
+    text-align: left;
+    margin: 15rem 0 2rem 10rem;
+    padding: 150px;
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .linea__superior {
+    border-bottom: 5px solid #1f80a9; /* Puedes ajustar el grosor y el color de la línea según tus preferencias */
+    display: inline; /* Para que la línea se ajuste al texto */
+  }
+
+  .btn__send{
+    width: 12rem;
+    background-color: #005aba;
+  }
+
+  .btn__send:hover,
+  .btn__send:focus{
+    background-color: #1184ff;
+    color: #ffffff;
+  }
+
+  .recaptcha {
+    margin-bottom: 20px;
+  }
+
+  .error-captcha{
+    color: red;
+    margin-bottom: 20px;
+  }
