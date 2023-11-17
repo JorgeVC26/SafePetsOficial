@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Auth/NavbarHome';
 import '../../css/login.css';
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Register() {
+  const [captchaValue, setCaptchaValue] = useState(null);
   const authToken = localStorage.getItem('authToken');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('usuario'); // Valor predeterminado: usuario
+  const [role, setRole] = useState('admin'); // Valor predeterminado: usuario
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
@@ -44,8 +46,8 @@ function Register() {
     e.preventDefault();
 
     // Verificar si el formulario es válido
-    if (!isFormValid()) {
-      return;
+    if (!isFormValid()|| !captchaValue) {
+            return;
     }
 
     // Crear un objeto para almacenar los datos del usuario
@@ -108,16 +110,16 @@ function Register() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="admin">Colaborador</option>
-          </select>
+         
+
+          <ReCAPTCHA 
+                sitekey="6LeRZwspAAAAAFowRBpENYBi0WmY5BwIop8TB-nY"
+                onChange={(value) => setCaptchaValue(value)}
+              />
+
           {errorMessage && <div className="error-message">{errorMessage}</div>}
           {successMessage && <div className="success-message">{successMessage}</div>}
-          <button type="submit">Registrarse</button>
-        </form>
+          <button style={{ marginTop: '2rem'}} type="submit" disabled={!captchaValue} >Registrarse</button>        </form>
       </div>
     </div>
   );
