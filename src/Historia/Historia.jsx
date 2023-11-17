@@ -7,7 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Footer from "../footer/footer";
 import Testimonio from "../testimonios/testimonio";
 
-function Historia() {
+function Historia ({ authToken }) {
   
     return (
       <div>
@@ -16,6 +16,13 @@ function Historia() {
       <a className="titulo" href="/">
         <h1>Safe<span>Pets</span></h1>
       </a>
+      {!authToken && (
+            <>
+              <div className="contenedor-btns">
+                <Link className="btn-iniciar-sesion" to="/">Regresar</Link>
+              </div>
+            </>
+          )}
         </header>
         <div className="hero">
         <div className="textos"><h1>CONOCENOS</h1></div>

@@ -27,7 +27,7 @@ const ControlServicios = () => {
 
   return (
     <div className="contenedor-presupuesto contenedor sombra dos-columnas">
-      <p>Imagen aquí</p>
+      
 
       <div className="contenido-presupuesto">
         <p>

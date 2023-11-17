@@ -50,9 +50,9 @@ function Home() {
             </>
           )}
           {authToken && (
-            <li className="logout-button-container">
+            <div className="logout-button-container">
               <button className="logout-button" onClick={handleLogout}>Cerrar Sesión</button>
-            </li>
+            </div>
           )}
       </header>
 

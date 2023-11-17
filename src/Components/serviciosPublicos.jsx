@@ -10,8 +10,9 @@ import IconoPaseo from '../img/paseo.avif';
 import IconoComida from '../img/comida-mascota.png';
 import IconoHigiene from '../img/higiene_mascota.png';
 import IconoCuido from '../img/cuido_completo.png';
+import Footer from "../footer/footer";
 
-function ServiciosPublicos() {
+function ServiciosPublicos({ authToken }) {
   const diccionarioIconos = {
     paseo: IconoPaseo,
     restaurante: IconoComida,
@@ -91,10 +92,16 @@ function ServiciosPublicos() {
               <h1>Safe<span>Pets</span></h1>
             </a>
           </Link>
+          {!authToken && (
+            <>
+              <div className="contenedor-btns">
+                <Link className="btn-iniciar-sesion" to="/">Regresar</Link>
+              </div>
+            </>
+          )}
         </div>
       </header>
       <div className="contenedor-presupuesto contenedor sombra dos-columnas">
-        <p>Imagen aquí</p>
         <div className="contenido-presupuesto">
           <p>{serviciosMostrados.length} servicios disponibles</p>
         </div>
@@ -192,6 +199,7 @@ function ServiciosPublicos() {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }
