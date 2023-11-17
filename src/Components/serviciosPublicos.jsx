@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FaStar } from 'react-icons/fa';
 import IconoNuevoServicio from '../img/nuevo-gasto.svg';
-import CerrarBtn from '../img/cerrar.svg'
+import CerrarBtn from '../img/cerrar.svg';
 import { formatearFecha } from './helpers';
 import '../Style/style.css';
 import '../App.css';
@@ -9,8 +10,6 @@ import IconoPaseo from '../img/paseo.avif';
 import IconoComida from '../img/comida-mascota.png';
 import IconoHigiene from '../img/higiene_mascota.png';
 import IconoCuido from '../img/cuido_completo.png';
-import { FaStar } from 'react-icons/fa';
-
 
 function ServiciosPublicos() {
   const diccionarioIconos = {
@@ -20,36 +19,30 @@ function ServiciosPublicos() {
     cuido: IconoCuido
   };
 
-  // Estado para almacenar los servicios obtenidos del localStorage
   const [serviciosMostrados, setServiciosMostrados] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
-  // Servicio que se está calificando
   const [servicioACalificar, setServicioACalificar] = useState(null);
   const [filtro, setFiltro] = useState("");
   const [calificacion, setCalificacion] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
-  // Función para obtener los servicios del localStorage
   const obtenerServiciosDelLocalStorage = () => {
     const serviciosAprobados = JSON.parse(localStorage.getItem('serviciosAprobados')) || [];
     setServiciosMostrados(serviciosAprobados);
   };
 
-  // Función para abrir el modal de calificación
   const abrirModalCalificacion = (servicio) => {
     setServicioACalificar(servicio);
-    setCalificacion(servicio.calificacion || 0); // Mostrar la calificación actual del servicio
+    setCalificacion(servicio.calificacion || 0);
     setModalVisible(true);
   };
 
   const verDetalles = (servicio) => {
-    // Almacenar la información del servicio en localStorage
     localStorage.setItem('detalleServicio', JSON.stringify(servicio));
-    // Redireccionar a la página de detalles
     window.location.href = '/detalleServicio';
   };
 
-  // Función para cerrar el modal de calificación
   const cerrarModalCalificacion = () => {
     setServicioACalificar(null);
     setCalificacion(0);
@@ -57,46 +50,33 @@ function ServiciosPublicos() {
   };
 
   const calificarServicio = () => {
-    // Comprueba que haya un servicio para calificar
     if (servicioACalificar) {
-      // Copia los servicios mostrados para no mutar el estado directamente
       const serviciosActualizados = [...serviciosMostrados];
-  
-      // Encuentra el índice del servicio a calificar
       const indexServicioACalificar = serviciosActualizados.findIndex(servicio => servicio.id === servicioACalificar.id);
-  
+
       if (indexServicioACalificar !== -1) {
-        // Verifica si el servicio tiene un array de calificaciones o crea uno
         if (!serviciosActualizados[indexServicioACalificar].calificaciones) {
           serviciosActualizados[indexServicioACalificar].calificaciones = [];
         }
-  
-        // Agrega la calificación al array de calificaciones
+
         serviciosActualizados[indexServicioACalificar].calificaciones.push(calificacion);
-  
-        // Calcula el promedio de calificaciones para el servicio
+
         const calificaciones = serviciosActualizados[indexServicioACalificar].calificaciones;
-  
+
         if (calificaciones.length > 0) {
           const calificacionesNumeros = calificaciones.map(calificacion => parseFloat(calificacion));
           const sumatoriaCalificaciones = calificacionesNumeros.reduce((acc, curr) => acc + curr, 0);
           const promedio = sumatoriaCalificaciones / calificacionesNumeros.length;
           serviciosActualizados[indexServicioACalificar].promedioCalificaciones = promedio;
         }
-        
-  
-        // Actualiza el estado con los servicios calificados
+
         setServiciosMostrados(serviciosActualizados);
-  
-        // Actualiza el localStorage con los servicios calificados
         localStorage.setItem('serviciosAprobados', JSON.stringify(serviciosActualizados));
       }
-  
-      cerrarModalCalificacion(); // Cierra el modal después de calificar.
+
+      cerrarModalCalificacion();
     }
   };
-  
-  
 
   useEffect(() => {
     obtenerServiciosDelLocalStorage();
@@ -137,40 +117,52 @@ function ServiciosPublicos() {
         </form>
       </div>
       <div className='listado-gastos contenedor'>
-      {serviciosMostrados.length > 0 ? (
-  <>
-    <h2>Servicios</h2>
-    {serviciosMostrados
-      .filter(servicio => !filtro || servicio.categoria === filtro) // Filtra los servicios por categoría si se ha seleccionado un filtro
-      .map((servicio, index) => (
-        <div className='gasto sombra' key={index}>
-          <div className='contenido-gasto'>
-            <img src={diccionarioIconos[servicio.categoria]} alt="Icono servicio" />
-            <div className='descripcion-gasto'>
-              <p className='categoria'>{servicio.categoria}</p>
-              <p className='nombre-gasto'>{servicio.nombre}</p>
-              <p className='nombre-gasto'>{servicio.ubicacion}</p>
-              <p className='nombre-gasto'>Creado por: {servicio.usuarioActivoName}</p>
-              <p className='fecha-gasto'>
-                Agregado el: <span>{formatearFecha(servicio.fecha)}</span>
-              </p>
-              {servicio.promedioCalificaciones && (
-                <p className='fecha-gasto'>Calificación: {servicio.promedioCalificaciones.toFixed(2)}</p>
-              )}
-              <button className='nombre-gasto calificar' onClick={() => abrirModalCalificacion(servicio)}>Calificar</button>
-            </div>
-          </div>
-          <p className='cantidad-gasto'>₡{servicio.precio}</p>
+        {serviciosMostrados.length > 0 ? (
+          <>
+            <h2>Servicios</h2>
+            {serviciosMostrados
+              .filter(servicio => !filtro || servicio.categoria === filtro)
+              .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+              .map((servicio, index) => (
+                <div className='gasto sombra' key={index}>
+                  <div className='contenido-gasto'>
+                    <img src={diccionarioIconos[servicio.categoria]} alt="Icono servicio" />
+                    <div className='descripcion-gasto'>
+                      <p className='categoria'>{servicio.categoria}</p>
+                      <p className='nombre-gasto'>{servicio.nombre}</p>
+                      <p className='nombre-gasto'>{servicio.ubicacion}</p>
+                      <p className='nombre-gasto'>Creado por: {servicio.usuarioActivoName}</p>
+                      <p className='fecha-gasto'>
+                        Agregado el: <span>{formatearFecha(servicio.fecha)}</span>
+                      </p>
+                      {servicio.promedioCalificaciones && (
+                        <p className='fecha-gasto'>Calificación: {servicio.promedioCalificaciones.toFixed(2)}</p>
+                      )}
+                      <button className='nombre-gasto calificar' onClick={() => abrirModalCalificacion(servicio)}>Calificar</button>
+                    </div>
+                  </div>
+                  <p className='cantidad-gasto'>₡{servicio.precio}</p>
 
-          <button className="ver-mas-btn" onClick={() => verDetalles(servicio)}>
-            Ver Más 
-          </button>
-        </div>
-      ))}
-  </>
-) : (
-  <h2>No hay servicios</h2>
-)}
+                  <button className="ver-mas-btn" onClick={() => verDetalles(servicio)}>
+                    Ver Más
+                  </button>
+                </div>
+              ))}
+            <div className="pagination">
+              {Array.from({ length: Math.ceil(serviciosMostrados.length / itemsPerPage) }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={currentPage === index + 1 ? 'active' : ''}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          </>
+        ) : (
+          <h2>No hay servicios</h2>
+        )}
       </div>
 
       {modalVisible && (
@@ -178,30 +170,27 @@ function ServiciosPublicos() {
           <div className="cerrar-modal">
             <img
               src={CerrarBtn}
-              lt="cerrar modal"
+              alt="cerrar modal"
               onClick={cerrarModalCalificacion}
             />
           </div>
           <div className='campo'>
-          <h2>Calificar Servicio</h2>
-          <p>Servicio: {servicioACalificar.nombre}</p>
-          <label>Calificación:</label>
-          <div className="estrellas">
-      {[1, 2, 3, 4, 5].map((valor) => (
-        <FaStar
-          key={valor}
-          className={valor <= calificacion ? 'estrella-activa' : 'estrella-inactiva'}
-          onClick={() => setCalificacion(valor)}
-        />
-      ))}
-    </div>
-          <button className='btn_cancelar' onClick={cerrarModalCalificacion}>Cancelar</button>
-          <button className='btn_calificar' onClick={calificarServicio}>Calificar</button>
+            <h2>Calificar Servicio</h2>
+            <p>Servicio: {servicioACalificar.nombre}</p>
+            <label>Calificación:</label>
+            <div className="estrellas">
+              {[1, 2, 3, 4, 5].map((valor) => (
+                <FaStar
+                  key={valor}
+                  className={valor <= calificacion ? 'estrella-activa' : 'estrella-inactiva'}
+                  onClick={() => setCalificacion(valor)}
+                />
+              ))}
+            </div>
+            <button className='btn_cancelar' onClick={cerrarModalCalificacion}>Cancelar</button>
+            <button className='btn_calificar' onClick={calificarServicio}>Calificar</button>
+          </div>
         </div>
-
-        </div>
-
-
       )}
     </div>
   );

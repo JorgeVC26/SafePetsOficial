@@ -1060,3 +1060,23 @@ div {
   color: #d9534f; /* Color de texto rojo */
   margin-top: 5px; /* Margen superior */
 }
+
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #4caf50;
+  color: white;
+}
