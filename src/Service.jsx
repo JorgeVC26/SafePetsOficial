@@ -175,15 +175,8 @@ function Service() {
 
      
         <Filtro filtro={filtro} setFiltro={setFiltro} />
-        <ListadoServicios
-          servicios={serviciosAprobados}
-          setServicioEditar={setServicioEditar}
-          eliminarServicio={handleEliminarServicio}
-          editarServicio={handleEditarServicio}
-          filtro={filtro}
-          serviciosFiltrados={serviciosFiltrados}
-        />
-{confirmDelete && (
+
+        {confirmDelete && (
           <div className="confirmation-modal">
             <h3>¿Estás seguro de que quieres eliminar este servicio?</h3>
             <div className="confirmation-modal-buttons">
@@ -196,6 +189,16 @@ function Service() {
             </div>
           </div>
         )}
+
+
+        <ListadoServicios
+          servicios={serviciosAprobados}
+          setServicioEditar={setServicioEditar}
+          eliminarServicio={handleEliminarServicio}
+          editarServicio={handleEditarServicio}
+          filtro={filtro}
+          serviciosFiltrados={serviciosFiltrados}
+        />
 
 {mensajeModalVisible && <MsjServicio />}
           

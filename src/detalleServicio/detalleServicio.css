@@ -9,8 +9,7 @@ body {
   padding: 30px;
   font-size: 1.8rem;
   color: #333;
-  background-color: #fff;
-  border: 2px solid #306fae;
+  background-color: rgb(255, 243, 225);
   border-radius: 15px;
   max-width: 800px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -20,9 +19,17 @@ body {
 .__title {
   font-size: 3rem;
   margin-bottom: 20px;
-  color: #306fae;
+  color: var(--gris-oscuro);
+  font-size: 3rem;
+  font-weight: 900;
 }
 
+
+.__subTitle {
+  color: var(--amarillo);
+    font-size: 2.4rem;
+    font-weight: 700;
+}
 .dato__s {
   display: flex;
   flex-direction: column;
@@ -47,8 +54,10 @@ body {
 .__info {
   flex-grow: 1;
   padding: 30px;
-  border: 3px solid #306fae;
   border-radius: 15px;
+  background-color: rgb(255, 248, 238);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 
 /* Estilo adicional al pasar el ratón sobre el contenedor del servicio */

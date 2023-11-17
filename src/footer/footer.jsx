@@ -23,12 +23,8 @@ const Footer=() => {
                         <a href="">
                             <p>Blog</p>
                         </a>
-                        <a href="">
-                            <p>About Us</p>
-                        </a>
-                        <a href="">
-                            <p>Testimonials</p>
-                        </a>
+                       
+                        
                     </div>
                     <div className="sb__footer-links_div">
                         <h4>Legal</h4>
