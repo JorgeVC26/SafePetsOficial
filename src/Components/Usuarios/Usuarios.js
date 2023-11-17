@@ -13,7 +13,7 @@ function Usuarios() {
   const usuarioActivo = JSON.parse(localStorage.getItem('UsuarioActivo'));
   const rol = usuarioActivo ? usuarioActivo[0].role : null;
 
-  const canViewUsers = rol === 'superadmin' || rol === 'admin';
+  const canViewUsers = rol === 'superadmin';
 
   useEffect(() => {
     const storedUsers = JSON.parse(localStorage.getItem('users'));
