@@ -44,9 +44,9 @@ const Footer=() => {
                         <div className="sb__footer-links_div">
                             <h4>Coming soon on</h4>
                             <div className="socialmedia">
-                            <p><img src={fb} alt=""/></p>
-                            <p><img src={twitter} alt=""/></p>
-                            <p><img src={insta} alt=""/></p>
+                            <a href="https://www.facebook.com/"><p><img src={fb} alt=""/></p></a>
+                            <a href="https://twitter.com/i/flow/login?redirect_after_login=%2Finiciarsesion"><p><img src={twitter} alt=""/></p></a>
+                            <a href="https://www.instagram.com/"><p><img src={insta} alt=""/></p></a>
                         </div>
                         </div>
                         </div>
