@@ -136,7 +136,7 @@ function ServiciosPublicos({ authToken }) {
                     <img src={diccionarioIconos[servicio.categoria]} alt="Icono servicio" />
                     <div className='descripcion-gasto'>
                       <p className='categoria'>{servicio.categoria}</p>
-                      <p className='nombre-gasto'>{servicio.nombre}</p>
+                      <p className='nombre-gasto'>{servicio.nombre} {servicio.apellido}</p>
                       <p className='nombre-gasto'>{servicio.ubicacion}</p>
                       <p className='nombre-gasto'>Creado por: {servicio.usuarioActivoName}</p>
                       <p className='fecha-gasto'>
