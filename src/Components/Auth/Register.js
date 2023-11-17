@@ -2,44 +2,40 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Auth/NavbarHome';
 import '../../css/login.css';
-import ReCAPTCHA from "react-google-recaptcha";
-
 
 function Register() {
-  const [captchaValue, setCaptchaValue] = useState(null);
-
   const authToken = localStorage.getItem('authToken');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('usuario');
-  const [passwordError, setPasswordError] = useState('');
-  const [formError, setFormError] = useState('');
-  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [role, setRole] = useState('usuario'); // Valor predeterminado: usuario
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   const getNextUserId = (users) => {
+    // Encuentra el máximo 'id' en los usuarios registrados
     const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+    // Asigna el siguiente 'id' al nuevo usuario
     return maxId + 1;
   };
 
   const isFormValid = () => {
     // Verificar si algún campo está en blanco
-    if (!name || !email || (!password && !confirmPassword)) {
-      setFormError('Por favor, completa todos los campos.');
+    if (!name || !email || !password || !confirmPassword) {
+      setErrorMessage('Por favor, completa todos los campos.');
       return false;
     }
-
-    // Limpiar mensajes de error si no hay problemas
-    setPasswordError('');
-    setFormError('');
 
     // Verificar si las contraseñas coinciden
-    if (password && confirmPassword && password !== confirmPassword) {
-      setPasswordError('Las contraseñas no coinciden');
+    if (password !== confirmPassword) {
+      setErrorMessage('Las contraseñas no coinciden');
       return false;
     }
+
+    // Limpiar los mensajes de error si no hay problemas
+    setErrorMessage('');
 
     return true;
   };
@@ -47,22 +43,37 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!isFormValid()|| !captchaValue) {
+    // Verificar si el formulario es válido
+    if (!isFormValid()) {
       return;
     }
 
+    // Crear un objeto para almacenar los datos del usuario
     const userData = { id: 0, name, email, password, role };
+
+    // Obtener los datos actuales de usuarios desde el Local Storage
     const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Asignar un 'id' único al nuevo usuario
     userData.id = getNextUserId(existingUsers);
+
+    // Agregar el nuevo usuario al arreglo de usuarios
     const updatedUsers = [...existingUsers, userData];
+
+    // Guardar el arreglo actualizado en Local Storage como cadena JSON
     localStorage.setItem('users', JSON.stringify(updatedUsers));
 
-    // Mostrar el mensaje de registro exitoso
-    setRegistrationSuccess(true);
+    // Mostrar el mensaje de éxito
+    setSuccessMessage('Registro exitoso. Redirigiendo al inicio de sesión...');
 
-    // Redirigir al login después de 2 segundos (ajustable según tus necesidades)
+    // Limpiar el formulario después de un breve retraso (ajustable según tus necesidades)
     setTimeout(() => {
-      setRegistrationSuccess(false);
+      setName('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setRole('usuario');
+      setSuccessMessage('');
       navigate('/login');
     }, 2000);
   };
@@ -97,28 +108,16 @@ function Register() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-            <ReCAPTCHA 
-                sitekey="6LeRZwspAAAAAFowRBpENYBi0WmY5BwIop8TB-nY"
-                onChange={(value) => setCaptchaValue(value)}
-              />
-          {formError && <span className="error-message">{formError}</span>}
-          {passwordError && <span className="error-message">{passwordError}</span>}
-          {/* <select
+          <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
             <option value="admin">Colaborador</option>
-          </select> */}
-          <button style={{ marginTop: '2rem'}} type="submit" disabled={!captchaValue} >Registrarse</button>
+          </select>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {successMessage && <div className="success-message">{successMessage}</div>}
+          <button type="submit">Registrarse</button>
         </form>
-
-        {registrationSuccess && (
-          <div className="success-message">Registro exitoso. Redirigiendo al inicio de sesión...</div>
-        )}
-
-
-
-        
       </div>
     </div>
   );
