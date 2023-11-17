@@ -9,6 +9,8 @@ import IconoPaseo from '../img/paseo.avif';
 import IconoComida from '../img/comida-mascota.png';
 import IconoHigiene from '../img/higiene_mascota.png';
 import IconoCuido from '../img/cuido_completo.png';
+import { FaStar } from 'react-icons/fa';
+
 
 function ServiciosPublicos() {
   const diccionarioIconos = {
@@ -161,7 +163,7 @@ function ServiciosPublicos() {
           <p className='cantidad-gasto'>₡{servicio.precio}</p>
 
           <button className="ver-mas-btn" onClick={() => verDetalles(servicio)}>
-            Ver Más
+            Ver Más 
           </button>
         </div>
       ))}
@@ -184,13 +186,15 @@ function ServiciosPublicos() {
           <h2>Calificar Servicio</h2>
           <p>Servicio: {servicioACalificar.nombre}</p>
           <label>Calificación:</label>
-          <input
-            type="number"
-            min="1"
-            max="5"
-            value={calificacion}
-            onChange={(e) => setCalificacion(e.target.value)}
-          />
+          <div className="estrellas">
+      {[1, 2, 3, 4, 5].map((valor) => (
+        <FaStar
+          key={valor}
+          className={valor <= calificacion ? 'estrella-activa' : 'estrella-inactiva'}
+          onClick={() => setCalificacion(valor)}
+        />
+      ))}
+    </div>
           <button className='btn_cancelar' onClick={cerrarModalCalificacion}>Cancelar</button>
           <button className='btn_calificar' onClick={calificarServicio}>Calificar</button>
         </div>

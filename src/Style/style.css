@@ -50,6 +50,24 @@ select {
   color: white;
 }
 
+.estrellas {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.estrella-activa,
+.estrella-inactiva {
+  font-size: 2em; /* Ajusta el tamaño según tus preferencias */
+  color: grey;
+  cursor: pointer;
+}
+
+.estrella-activa {
+  color: yellow;
+}
+
+
+
 .btn-iniciar-sesion:hover{
   background-color: rgb(212, 171, 8) ;
 }
