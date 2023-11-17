@@ -44,7 +44,7 @@ const DetalleServicio = () => {
             <p className='__subTitle'>Sobre mi: <span style={{ color: 'var(--celeste)', fontWeight: 'bold' }}>{detalleServicio.descripcion}</span> </p>
             <p className='__subTitle'>Tarifa: <span style={{ color: 'var(--celeste)', fontWeight: 'bold' }}>₡{detalleServicio.precio}</span> </p>
             <p className='__subTitle'>Creado por: <span style={{ color: 'var(--celeste)', fontWeight: 'bold' }}>{detalleServicio.usuarioActivoName}</span> </p>
-            <p className='__subTitle'>Agregado el: <span style={{ color: 'var(--celeste)', fontWeight: 'bold' }}>{detalleServicio.fecha}</span> </p>
+            {/* <p className='__subTitle'>Agregado el: <span style={{ color: 'var(--celeste)', fontWeight: 'bold' }}>{detalleServicio.fecha}</span> </p> */}
             {/* ... (mostrar otros detalles) */}
           </div>
         </div>
