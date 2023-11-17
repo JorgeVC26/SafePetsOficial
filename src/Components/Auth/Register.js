@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Auth/NavbarHome';
 import '../../css/login.css';
+import ReCAPTCHA from "react-google-recaptcha";
+
 
 function Register() {
+  const [captchaValue, setCaptchaValue] = useState(null);
+
   const authToken = localStorage.getItem('authToken');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -43,7 +47,7 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!isFormValid()) {
+    if (!isFormValid()|| !captchaValue) {
       return;
     }
 
@@ -93,20 +97,28 @@ function Register() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+            <ReCAPTCHA 
+                sitekey="6LeRZwspAAAAAFowRBpENYBi0WmY5BwIop8TB-nY"
+                onChange={(value) => setCaptchaValue(value)}
+              />
           {formError && <span className="error-message">{formError}</span>}
           {passwordError && <span className="error-message">{passwordError}</span>}
-          <select
+          {/* <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
             <option value="admin">Colaborador</option>
-          </select>
-          <button type="submit">Registrarse</button>
+          </select> */}
+          <button style={{ marginTop: '2rem'}} type="submit" disabled={!captchaValue} >Registrarse</button>
         </form>
 
         {registrationSuccess && (
           <div className="success-message">Registro exitoso. Redirigiendo al inicio de sesión...</div>
         )}
+
+
+
+        
       </div>
     </div>
   );
